@@ -1,0 +1,10 @@
+.Restaurant {
+    float: left;
+    width: 200px;
+    height: 300px;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding: 5px;
+    border: 2px solid grey;
+    font-size: x-small;
+}
