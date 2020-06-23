@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react';
+import Toolbar from '../Navigation/Toolbar/Toolbar'
 
-const home = props => (
+const layout = props => (
     <Fragment>
-        <div>Toolbar, SideDrawer, Backdrop</div>
+        <Toolbar/>
         <main>
             {props.children}
         </main>
     </Fragment>
 )
 
-export default home;
+export default layout;

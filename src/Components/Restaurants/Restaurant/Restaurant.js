@@ -20,7 +20,7 @@ const restaurant = props => {
         <div 
             className={styles.Restaurant}>
             <img className={styles.FoodImage} src={icon} alt={'Food Image'}/>
-            <p><strong style={{fontSize:'15px'}}>{props.name}</strong></p>
+            <p><strong style={{fontSize:'15 px'}}>{props.name}</strong></p>
             <p>{address} {props.city}</p>
             <Ratings 
                 rating={props.stars}

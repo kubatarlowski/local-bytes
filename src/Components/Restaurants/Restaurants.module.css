@@ -1,7 +1,19 @@
 .Restaurants {
-    /* display: flex;
+    text-align: left;
+    display: flex;
     flex-wrap: wrap;
     float: left;
-    width: 25%;
-    padding: 0 10px; */
+    width: 0 50%;
+    padding: 0 10px;
+    margin-left: 25%;
+    margin-top: 100px;
 }
+
+@media (max-width: 450px) {
+    .Restaurant {
+      width: 250px;
+      margin-left: 0%;
+      margin-top: 0px;
+      font-size: x-small;
+    }
+  }

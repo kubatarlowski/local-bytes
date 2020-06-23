@@ -1,6 +1,4 @@
 .Restaurant {
-    text-align: left;
-    float: left;
     width: 500px;
     height: 200px;
     margin-left: 10px;
@@ -8,6 +6,8 @@
     padding: 5px;
     border: 2px solid grey;
     font-size: small;
+    display: inline-block;
+
 }
 
 .FoodImage {
@@ -19,6 +19,7 @@
   display: block;
   width: 30%;
 }
+
 .Button {
   background-color: red;
   border: none;
@@ -31,4 +32,12 @@
   vertical-align: bottom;
   border-radius: 5px;
 
+}
+
+@media (max-width: 500px) {
+  .Restaurant {
+    width: 250px;
+    margin: 2;
+    font-size: x-small;
+  }
 }

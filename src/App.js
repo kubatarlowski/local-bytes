@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
-import Home from './Components/Home/Home';
+import Layout from './Components/Layout/Layout';
 import Restaurants from './Components/Restaurants/Restaurants';
 
 function App() {
   return (
     <div className="App">
-      <Home>
+      <Layout>
         <Restaurants />
-      </Home>
+      </Layout>
     </div>
   );
 }

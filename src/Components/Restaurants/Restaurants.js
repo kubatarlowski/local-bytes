@@ -89,7 +89,6 @@ const Restaurants = () => {
 
     const returnedRes = businesses.map((business, index) => {
         return <Restaurant 
-            className = {styles.Restaurants}
             visit={() => updateVisit(business,index)}
             visited={() => updateVisited(business,index)}
             key={business.business_id}
@@ -104,7 +103,7 @@ const Restaurants = () => {
     })
 
     return (
-        <div>
+        <div className = {styles.Restaurants}>
             {loading ? <p>Loading ...</p> : returnedRes}
         </div>
     )
