@@ -4,10 +4,12 @@ import BusinessDataset from '../../Yelp_Data/sample_businesses.json'
 import Restaurant from './Restaurant/Restaurant'
 import firebase from '../../axios-restaurants';
 import styles from './Restaurants.module.css'
+
+
 const Restaurants = () => {
     
     const [businesses, setBusinesses] = useState([])
-    const [loading,setLoading] = useState(false)
+    const [loading,setLoading] = useState(true)
 
     const deleteBusiness = (index) => {
         const newBus = [...businesses];
@@ -28,8 +30,6 @@ const Restaurants = () => {
     }
 
     const getRestaurants = async () => {
-        setLoading(true);
-
         let myVisit = [];
         let myVisited = [];
         await axios.get('https://local-byte.firebaseio.com/visited.json')

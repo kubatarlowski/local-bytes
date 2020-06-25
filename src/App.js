@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
 import Layout from './Components/Layout/Layout';
-import Restaurants from './Components/Restaurants/Restaurants';
+import { BrowserRouter } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
-      <Layout>
-        <Restaurants />
-      </Layout>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Layout />
+      </div>
+    </BrowserRouter>
   );
 }
 

@@ -1,12 +1,21 @@
 import React, { Fragment } from 'react';
 import Toolbar from '../Navigation/Toolbar/Toolbar'
+import Restaurants from '../Restaurants/Restaurants';
+import Visit from '../User/Visit/Visit'
+import Visited from '../User/Visited/Visited'
+import User from '../User/User'
+import { Route } from 'react-router-dom';
+import Search from '../Search/Search'
+
 
 const layout = props => (
     <Fragment>
         <Toolbar/>
-        <main>
-            {props.children}
-        </main>
+        <Search/>
+        <Route path="/" exact component={Restaurants} />
+        <Route path="/visit" exact component={Visit} />
+        <Route path="/visited" exact component={Visited} />
+        <Route path="/profile" exact component={User} />
     </Fragment>
 )
 

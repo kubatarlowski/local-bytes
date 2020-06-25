@@ -19,7 +19,7 @@ const restaurant = props => {
     return (
         <div 
             className={styles.Restaurant}>
-            <img className={styles.FoodImage} src={icon} alt={'Food Image'}/>
+            <img className={styles.FoodImage} src={icon} alt=''/>
             <p><strong style={{fontSize:'15 px'}}>{props.name}</strong></p>
             <p>{address} {props.city}</p>
             <Ratings 
@@ -44,12 +44,14 @@ const restaurant = props => {
             <p style={{color: 'grey'}}>{props.categories}</p>
             <p>{props.phone}</p>
             {/* {hours} */}
+            {props.visit ?
             <button 
                 className={styles.Button}
-                onClick={props.visit}>Visit</button>
+                onClick={props.visit}>Visit</button> : null}
+            {props.visited ?
             <button 
                 className={styles.Button}
-                onClick={props.visited}>Visited</button>
+                onClick={props.visited}>Visited</button> : null}
         </div>
     )
 }
