@@ -5,13 +5,10 @@ import Visit from '../User/Visit/Visit'
 import Visited from '../User/Visited/Visited'
 import User from '../User/User'
 import { Route } from 'react-router-dom';
-import Search from '../Search/Search'
-
 
 const layout = props => (
     <Fragment>
         <Toolbar/>
-        <Search/>
         <Route path="/" exact component={Restaurants} />
         <Route path="/visit" exact component={Visit} />
         <Route path="/visited" exact component={Visited} />

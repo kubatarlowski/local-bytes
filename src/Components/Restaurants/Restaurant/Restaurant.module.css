@@ -1,26 +1,25 @@
 .Restaurant {
-    width: 500px;
-    height: 200px;
-    margin-left: 10px;
-    margin-top: 10px;
-    padding: 5px;
-    border: 2px solid grey;
-    font-size: small;
-    display: inline-block;
-
+  display: inline-block;
+  width: 500px;
+  text-align: left;
+  height: 200px;
+  margin-left: 10px;
+  margin-top: 10px;
+  padding: 5px;
+  border: 2px solid grey;
+  font-size: small;
 }
 
-.FoodImage {
+.Restaurant .FoodImage {
   float: left;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-top: 20px;
   margin-left: 10px;
   margin-right: 20px;
   display: block;
   width: 30%;
 }
 
-.Button {
+.Restaurant .Button {
   background-color: red;
   border: none;
   color: white;

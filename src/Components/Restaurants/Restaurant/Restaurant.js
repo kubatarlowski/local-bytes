@@ -5,23 +5,17 @@ import icon from '../../../assets/images/food.png'
 
 const restaurant = props => {          
 
-    let hours = null
-    if (props.hours) {
-        hours = Object.keys(props.hours).map((day) => {
-            return <p key={day}>{day}: {props.hours[day]}</p>
-        })
-    }
-    
     let address = props.address;
     if (address) {
         address=address+','
     }
+
     return (
         <div 
             className={styles.Restaurant}>
             <img className={styles.FoodImage} src={icon} alt=''/>
             <p><strong style={{fontSize:'15 px'}}>{props.name}</strong></p>
-            <p>{address} {props.city}</p>
+            <p>{address} {props.city} {props.state}</p>
             <Ratings 
                 rating={props.stars}
                 widgetRatedColors="red">
@@ -43,7 +37,6 @@ const restaurant = props => {
             </Ratings>
             <p style={{color: 'grey'}}>{props.categories}</p>
             <p>{props.phone}</p>
-            {/* {hours} */}
             {props.visit ?
             <button 
                 className={styles.Button}

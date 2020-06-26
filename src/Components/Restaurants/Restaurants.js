@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
 import BusinessDataset from '../../Yelp_Data/sample_businesses.json'
 import Restaurant from './Restaurant/Restaurant'
 import firebase from '../../axios-restaurants';
 import styles from './Restaurants.module.css'
+import Autocomplete from 'react-google-autocomplete'
 
 
 const Restaurants = () => {
     
     const [businesses, setBusinesses] = useState([])
     const [loading,setLoading] = useState(true)
+    const [searchLocation, setSearchLocation] = useState(null)
 
     const deleteBusiness = (index) => {
         const newBus = [...businesses];
@@ -29,45 +31,43 @@ const Restaurants = () => {
             .catch(err => console.log(err))
     }
 
-    const getRestaurants = async () => {
+    async function getRestaurants () {
         let myVisit = [];
         let myVisited = [];
-        await axios.get('https://local-byte.firebaseio.com/visited.json')
-        .then(res => {
-            const tmpVisited = Object.keys(res.data)
-            const visitedIds = tmpVisited.map((key) => {
-                return res.data[key].id
-            })
-            myVisited = [...visitedIds];
-        }).catch(err => {
-            console.log(err)
-        })
-        await axios.get('https://local-byte.firebaseio.com/visit.json')
-        .then(res => {
-            const tmpVisit = Object.keys(res.data)
-            const visitIds = tmpVisit.map((key) => {
-                return res.data[key].id
-            })
-            myVisit = [...visitIds];
-        }).catch(err => {
-            console.log(err)
-        })
-        if (BusinessDataset){
-            const myRest = myVisit.concat(myVisited)
-            const homeRest = BusinessDataset.filter( ( el ) => !myRest.includes( el.business_id ) );
-            setBusinesses(homeRest)
-            setLoading(false)
-            return
-        }
-        await axios.get('https://api.yelp.com/v3/businesses/search', {
+        // await axios.get('https://local-byte.firebaseio.com/visited.json')
+        // .then(res => {
+        //     const tmpVisited = Object.keys(res.data)
+        //     const visitedIds = tmpVisited.map((key) => {
+        //         return res.data[key].id
+        //     })
+        //     myVisited = [...visitedIds];
+        // }).catch(err => {
+        //     console.log(err)
+        // })
+        // await axios.get('https://local-byte.firebaseio.com/visit.json')
+        // .then(res => {
+        //     const tmpVisit = Object.keys(res.data)
+        //     const visitIds = tmpVisit.map((key) => {
+        //         return res.data[key].id
+        //     })
+        //     myVisit = [...visitIds];
+        // }).catch(err => {
+        //     console.log(err)
+        // })
+        // if (BusinessDataset){
+        //     const myRest = myVisit.concat(myVisited)
+        //     const homeRest = BusinessDataset.filter( ( el ) => !myRest.includes( el.business_id ) );
+        //     setBusinesses(homeRest)
+        //     setLoading(false)
+        //     return
+        // }
+        await axios.get("https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search", {
             headers: {
-
                 Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
-            
             }, params: {        
-                location: 'Hicksville, NY',
-                categories: 'mexican'
-            },
+                location: searchLocation,
+                // categories: 'mexican'
+            }, 
 
         }).then((res) => {
             console.log(`[API KEY] ${process.env.REACT_APP_API_KEY}`)
@@ -82,8 +82,10 @@ const Restaurants = () => {
     };
 
     useEffect(() => {
-        getRestaurants();        
-    }, []);
+        if (searchLocation){
+            getRestaurants();   
+        } 
+    }, [searchLocation]);
           
     //rating, price, phone, categories, name
 
@@ -91,21 +93,27 @@ const Restaurants = () => {
         return <Restaurant 
             visit={() => updateVisit(business,index)}
             visited={() => updateVisited(business,index)}
-            key={business.business_id}
+            key={business.id}
             name={business.name}
-            address={business.address}
-            city={business.city}
-            stars={business.stars}
-            categories={business.categories}
+            address={business.location.address1}
+            city={business.location.city}
+            state={business.location.state}
+            stars={business.rating}
+            // categories={business.categories}
             phone={business.display_phone}
-            hours={business.hours}
         />
     })
 
     return (
-        <div className = {styles.Restaurants}>
-            {loading ? <p>Loading ...</p> : returnedRes}
-        </div>
+        <Fragment>
+            <Autocomplete
+            onPlaceSelected={(place) => setSearchLocation(place.formatted_address)}
+            className={styles.Search}/>
+            <div className = {styles.Restaurants}
+                style={{marginTop:'5px'}}>
+                {loading ? <p>Loading ...</p> : returnedRes}
+            </div>
+        </Fragment>
     )
 }
 
