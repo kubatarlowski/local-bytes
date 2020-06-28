@@ -1,5 +1,4 @@
 .Restaurant {
-  display: inline-block;
   width: 500px;
   text-align: left;
   height: 200px;
@@ -12,11 +11,11 @@
 
 .Restaurant .FoodImage {
   float: left;
-  margin-top: 20px;
-  margin-left: 10px;
-  margin-right: 20px;
+  max-width: 30%;
+  max-height: 90%;
+  margin: 20px 20px;
   display: block;
-  width: 30%;
+  margin-bottom: 100%;
 }
 
 .Restaurant .Button {

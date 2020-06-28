@@ -19,20 +19,31 @@ const Categories = props => {
         setCheckedCat(oldChecked)
     }
 
-    const checkboxes = props.categories.map((cat,index) => {
+    const checkboxes = props.categories.map((cat) => {
+        if (cat==='breakfast_brunch'){
+            cat='Breakfast Brunch'
+        }
+
+        if (cat==='mideastern'){
+            cat='Middle Eastern'
+        }
+
         return (
             <FormControlLabel
+                style={{textTransform: 'capitalize',
+                        }}
                 key={cat}
                 label={cat}
-                control={<Checkbox onChange={()=> {
+                control={<Checkbox
+                    onChange={()=> {
+                    props.checked(cat,!checkedCat[cat])
                     updateChecked(cat)
-                    props.checked(cat,!checkedCat[cat]
-                )}}/>
+
+                }}/>
             }/>)})
 
     return (
         <div className={styles.Categories}>
-            <header>Categories</header>
             {checkboxes}
         </div>
     )

@@ -9,10 +9,9 @@ import Categories from '../Categories/Categories'
 const Restaurants = () => {
     
     const [businesses, setBusinesses] = useState([])
-    const [loading,setLoading] = useState(true)
+    const [loading,setLoading] = useState(false)
     const [searchLocation, setSearchLocation] = useState(null)
     const [categories, setCategories] = useState([])
-    const [categoryIndex, setCategoryIndex] = useState({})
 
     const deleteBusiness = (index) => {
         const newBus = [...businesses];
@@ -22,19 +21,18 @@ const Restaurants = () => {
 
     const updateVisited = (newBus,index) => {
         deleteBusiness(index)
-        firebase.post('/visited.json',{id: newBus.business_id})
+        firebase.post('/visited.json',{id: newBus.id})
             .catch(err => console.log(err))
     }
 
     const updateVisit = (newBus,index) => {
         deleteBusiness(index)
-        firebase.post('/visit.json',{id:newBus.business_id})
+        firebase.post('/visit.json',{id:newBus.id})
             .catch(err => console.log(err))
     }
 
 
     useEffect(() => {
-        console.log(categories)
         async function getRestaurants() {
             await axios.get("https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search", {
                 headers: {
@@ -53,6 +51,7 @@ const Restaurants = () => {
             })
         }
         if (searchLocation){
+            setLoading(true)
             getRestaurants()
         }
  
@@ -70,8 +69,9 @@ const Restaurants = () => {
             city={business.location.city}
             state={business.location.state}
             stars={business.rating}
-            // categories={business.categories}
+            categories={business.categories}
             phone={business.display_phone}
+            pic={business.image_url}
         />
     })
 
@@ -89,13 +89,19 @@ const Restaurants = () => {
         }
     }
 
-    const possibleCat = ['mexican', 'chinese', 'indian', 'burgers']
+    const possibleCat = ['mexican', 'chinese', 'indian', 'burgers', 
+        'pizza', 'thai', 'japanese', 'mediterranean', 'mideastern',
+        'breakfast_brunch','brazilian','cafes','caribbean','creperies',
+        'delis','diners','latin','noodles','sandwiches','polish',
+        'portuguese','seafood','soulfood','steak','sushi','vegetarian',
+        'waffles','wraps']
 
     return (
         <Fragment>
             <Autocomplete
             onPlaceSelected={(place) => setSearchLocation(place.formatted_address)}
             className={styles.Search}/>
+            <header style={{textAlign: 'left', fontSize: 'large', marginLeft: '3%'}}>Categories</header>
             <Categories
                 categories={possibleCat}
                 checked={categorySelected}/>

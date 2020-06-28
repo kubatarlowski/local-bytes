@@ -1,8 +1,11 @@
 .Categories {
     position: fixed;
-    width: 60px;
+    text-align: left;
+    width: 180px;
     height: 100%;  
     left: 3%;
     top: 0;
     margin-top: 150px;
+    overflow-y: scroll;
+    height: 700px;
 }
