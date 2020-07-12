@@ -8,6 +8,16 @@
     height: 100%;
 }
 
+.NavigationItems button {
+    font: inherit;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    height: 42%;
+  }
+
 @media (min-width: 500px) {
     .NavigationItems {
         flex-flow: row;

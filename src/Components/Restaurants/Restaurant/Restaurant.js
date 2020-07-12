@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Restaurant.module.css';
 import Ratings from 'react-ratings-declarative';
-import icon from '../../../assets/images/food.png'
+// import icon from '../../../assets/images/food.png'
 
 const restaurant = props => {          
 
@@ -18,7 +18,7 @@ const restaurant = props => {
         <div 
             className={styles.Restaurant}>
             <img className={styles.FoodImage} 
-            src={props.pic ? props.pic : icon} alt=''/>
+            src={props.pic} alt=''/>
             <p><strong style={{fontSize:'15 px'}}>{props.name}</strong></p>
             <p>{address} {props.city} {props.state}</p>
             <Ratings 

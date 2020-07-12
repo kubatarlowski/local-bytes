@@ -3,7 +3,7 @@ import axios from 'axios';
 import Restaurant from '../../Restaurants/Restaurant/Restaurant'
 import styles from '../../Restaurants/Restaurants.module.css'
 
-const Visit = () => {
+const Visit = props => {
     const [visits, setVisits] = useState([])
     const [loading,setLoading] = useState(false)
 
@@ -15,16 +15,34 @@ const Visit = () => {
 
     const updateVisited = (newBus,index) => {
         deleteBusiness(index)
-        axios.post("http://localhost:5000/visited/add",{businessID: newBus.id})
+        axios.post("http://localhost:5000/visited/add",{
+            userId: props.userId,
+            businessID: newBus.id
+        },{
+            headers: {
+                Authorization: 'Bearer ' + props.token
+            }
+        })
         .then(_res => {
-            axios.post("http://localhost:5000/visit/delete",{businessID: newBus.id})
+            axios.post("http://localhost:5000/visit/delete",{
+                userId: props.userId,
+                businessID: newBus.id
+            },{
+                headers: {
+                    Authorization: 'Bearer ' + props.token
+                }
+            })
         })
         .catch(err => console.log(err))
     }
 
     useEffect(() => {
         setLoading(true)
-        axios.get("http://localhost:5000/visit/all")
+        axios.get("http://localhost:5000/visit/all",{
+            headers: {
+                Authorization: 'Bearer ' + props.token
+            }
+        })
         .then(userVisits => {
             if (userVisits.data.restaurants.length > 0) {
                 setVisits(userVisits.data.restaurants)
@@ -32,7 +50,7 @@ const Visit = () => {
             setLoading(false)
         })
         .catch((err) => console.log(err))}
-    ,[])
+    ,[props.token])
 
     let returnedRes = []
     if (visits) {

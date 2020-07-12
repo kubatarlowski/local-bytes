@@ -5,7 +5,7 @@ import styles from './Restaurants.module.css'
 import Autocomplete from 'react-google-autocomplete'
 import Categories from '../Categories/Categories'
 
-const Restaurants = () => {
+const Restaurants = props => {
     
     const [businesses, setBusinesses] = useState([])
     const [loading,setLoading] = useState(false)
@@ -21,19 +21,37 @@ const Restaurants = () => {
 
     const updateVisited = (newBus,index) => {
         deleteBusiness(index)
-        axios.post("http://localhost:5000/visited/add",{businessID: newBus.id})
-            .catch(err => console.log(err))
+        axios.post("http://localhost:5000/visited/add",{
+            userId: props.userId,
+            businessID: newBus.id
+        },{
+            headers: {
+                Authorization: 'Bearer ' + props.token
+            }
+        })
+        .catch(err => console.log(err))
     }
 
     const updateVisit = (newBus,index) => {
         deleteBusiness(index)
-        axios.post("http://localhost:5000/visit/add",{businessID: newBus.id})
-            .catch(err => console.log(err))
+        axios.post("http://localhost:5000/visit/add",{
+            userId: props.userId,
+            businessID: newBus.id
+        },{
+            headers: {
+                Authorization: 'Bearer ' + props.token
+            }
+        })
+        .catch(err => console.log(err))
     }
 
     useEffect(() => {
         async function getRestaurants() {
-            await axios.get("http://localhost:5000/visit/all")
+            await axios.get("http://localhost:5000/visit/all",{
+                headers: {
+                    Authorization: 'Bearer ' + props.token
+                }
+            })
             .then(userVisits => {
                 if (userVisits.data.restaurants.length > 0) {
                     userVisits.data.restaurants.forEach( el => {
@@ -42,7 +60,11 @@ const Restaurants = () => {
                 }
             })
             .catch((err) => console.log(err))
-            await axios.get("http://localhost:5000/visited/all")
+            await axios.get("http://localhost:5000/visited/all",{
+                headers: {
+                    Authorization: 'Bearer ' + props.token
+                }
+            })
             .then(userVisited => {
                 if (userVisited.data.restaurants.length > 0) {
                     userVisited.data.restaurants.forEach( el => {
@@ -55,8 +77,10 @@ const Restaurants = () => {
                 params: {        
                     location: searchLocation,
                     categories: categories.join(',')
-                }, 
-    
+                },
+                headers: {
+                    Authorization: 'Bearer ' + props.token
+                }
             }).then((res) => {
                 setLoading(false)
                 setBusinesses(res.data.businesses)
@@ -69,7 +93,7 @@ const Restaurants = () => {
             getRestaurants()
         }
  
-    }, [searchLocation,categories]);
+    }, [searchLocation,categories,props.token]);
     
     const returnedRes = businesses.map((business, index) => {
         if (!userPlaces.has(business.id)){

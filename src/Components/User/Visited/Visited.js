@@ -3,14 +3,18 @@ import axios from 'axios';
 import Restaurant from '../../Restaurants/Restaurant/Restaurant'
 import styles from '../../Restaurants/Restaurants.module.css'
 
-const Visited = () => {
+const Visited = props => {
     const [visited, setVisited] = useState([])
     const [loading,setLoading] = useState(false)
 
 
     useEffect(() => {
         setLoading(true)
-        axios.get("http://localhost:5000/visited/all")
+        axios.get("http://localhost:5000/visited/all",{
+            headers: {
+                Authorization: 'Bearer ' + props.token
+            }
+        })
         .then(userVisited => {
             if (userVisited.data.restaurants.length > 0) {
                 setVisited(userVisited.data.restaurants)
@@ -18,7 +22,7 @@ const Visited = () => {
             setLoading(false)
         })
         .catch((err) => console.log(err))}
-    ,[])
+    ,[props.token])
 
     let returnedRes = []
     if (visited) {
