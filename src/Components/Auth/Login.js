@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import { required, length, email } from '../../util/validators';
@@ -60,28 +60,32 @@ const Login = props => {
         >
           <Input
             id="email"
-            label="Your E-Mail"
+            // label="Your E-Mail"
             type="email"
             control="input"
             onChange= {inputChangeHandler}
             value={loginForm.email.value}
             valid={loginForm['email'].valid}
             touched={loginForm['email'].touched}
+            placeholder="Email"
           />
           <Input
             id="password"
-            label="Password"
+            // label="Password"
             type="password"
             control="input"
             onChange={inputChangeHandler}
             value={loginForm['password'].value}
             valid={loginForm['password'].valid}
             touched={loginForm['password'].touched}
+            placeholder="Password"
           />
           <Button design="raised" type="submit" loading={props.loading}>
-            Login
+            Log In
           </Button>
-        </form>
+          <Link to ='/signup' 
+            style={{color: 'dodgerblue', textDecoration: 'none'}} >Create new account</Link>        
+            </form>
       </Auth>
     );
   }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import Input from '../UI/Input/Input';
 import Button from '../UI/Button/Button';
 import { required, length, email } from '../../util/validators';
@@ -19,7 +19,25 @@ const Signup = props => {
         touched: false,
         validators: [required, length({ min: 5 })]
       },
-      formIsValid: false
+      confirm: {
+        value: '',
+        valid: false,
+        touched: false,
+        validators: [required, length({ min: 5 })]
+      },
+      first: {
+        value: '',
+        valid: false,
+        touched: false,
+        validators: [required]
+      },      
+      last: {
+        value: '',
+        valid: false,
+        touched: false,
+        validators: [required]
+      },
+      formIsValid: false     
     });
 
   const inputChangeHandler = (input, value) => {
@@ -47,28 +65,60 @@ const Signup = props => {
       <Auth>
         <form onSubmit={e => props.onSignup(e,signupForm)}>
           <Input
+            id="first"
+            type="first"
+            control="input"
+            onChange={inputChangeHandler}
+            value={signupForm['first'].value}
+            valid={signupForm['first'].valid}
+            touched={signupForm['first'].touched}
+            placeholder="First name"
+          />
+          <Input
+            id="last"
+            type="last"
+            control="input"
+            onChange={inputChangeHandler}
+            value={signupForm['last'].value}
+            valid={signupForm['last'].valid}
+            touched={signupForm['last'].touched}
+            placeholder="Last name"
+          />
+          <Input
             id="email"
-            label="Your E-Mail"
             type="email"
             control="input"
             onChange={inputChangeHandler}
             value={signupForm['email'].value}
             valid={signupForm['email'].valid}
             touched={signupForm['email'].touched}
+            placeholder="Email"
           />
           <Input
             id="password"
-            label="Password"
             type="password"
             control="input"
             onChange={inputChangeHandler}
             value={signupForm['password'].value}
             valid={signupForm['password'].valid}
             touched={signupForm['password'].touched}
+            placeholder="Password"
+          />
+          <Input
+            id="confirm"
+            type="password"
+            control="input"
+            onChange={inputChangeHandler}
+            value={signupForm['confirm'].value}
+            valid={signupForm['confirm'].valid}
+            touched={signupForm['confirm'].touched}
+            placeholder="Confirm password"
           />
           <Button design="raised" type="submit" loading={props.loading}>
-            Signup
+            Sign Up
           </Button>
+          <Link to ='/'
+            style={{color: 'dodgerblue', textDecoration: 'none'}} >Log in to existing account</Link>        
         </form>
       </Auth>
     );

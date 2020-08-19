@@ -1,0 +1,20 @@
+.Banner {
+    margin-top: 0px;
+    width: 100%;
+    z-index: 10;
+    background-color: #f5f3f0;
+    height:95%;
+    position: absolute;
+}
+
+.Banner h1 {
+    margin-top: 222px;
+    font-size: 50px;
+    margin-bottom: 5px;
+    margin-right: 50%;
+    color: red;
+}
+
+.Banner p {
+    margin-right: 50%;
+}

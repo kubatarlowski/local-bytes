@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Restaurant from '../../Restaurants/Restaurant/Restaurant'
 import styles from '../../Restaurants/Restaurants.module.css'
+import Location from '../Location/Location'
 
 const Visit = props => {
     const [visits, setVisits] = useState([])
     const [loading,setLoading] = useState(false)
+    const [returnedRes,setReturnedRes] = useState([])
 
     const deleteBusiness = (index) => {
         const newBus = [...visits];
-        newBus.splice(index, 1);
+        console.log(visits)
         setVisits(newBus)
     }
 
@@ -37,37 +39,69 @@ const Visit = props => {
     }
 
     useEffect(() => {
-        setLoading(true)
-        axios.get("http://localhost:5000/visit/all",{
-            headers: {
-                Authorization: 'Bearer ' + props.token
-            }
-        })
-        .then(userVisits => {
-            if (userVisits.data.restaurants.length > 0) {
-                setVisits(userVisits.data.restaurants)
-            }
-            setLoading(false)
-        })
-        .catch((err) => console.log(err))}
-    ,[props.token])
+        let mounted = true
+        if (mounted) {
+            setLoading(true)
+            axios.get("http://localhost:5000/visit/all",{
+                headers: {
+                    Authorization: 'Bearer ' + props.token
+                }
+            })
+            .then(userVisits => {
+                if (userVisits.data.restaurants.length > 0) {
+                    setVisits(userVisits.data.restaurants)
+                }
+                setLoading(false)
+            })
+            .catch((err) => console.log(err))
+        }
+        return () => mounted = false       
+    },[props.token, visits])
 
-    let returnedRes = []
-    if (visits) {
-        returnedRes = visits.map((business,index) => {
-            return <Restaurant 
-            visited={() => updateVisited(business,index)}
-            key={business.id}
-            name={business.name}
-            address={business.location.address1}
-            city={business.location.city}
-            state={business.location.state}
-            stars={business.rating}
-            categories={business.categories}
-            phone={business.display_phone}
-            pic={business.image_url}
-        />
+    const cityRests = rests => {
+        setReturnedRes(() => {
+            return rests.map((business) => {
+                const bus = business['business']
+                const ind = business['index']
+                return <Restaurant 
+                    visited={() => updateVisited(bus,ind)}
+                    key={bus.id}
+                    name={bus.name}
+                    address={bus.location.address1}
+                    city={bus.location.city}
+                    state={bus.location.state}
+                    stars={bus.rating}
+                    categories={bus.categories}
+                    phone={bus.display_phone}
+                    pic={bus.image_url}
+                />
+            })
         })
+    }
+
+    let cities = {}
+    if (visits) {
+        visits.forEach((b, i) => {
+            if (b.location.city in cities){
+                const busInCity = [...cities[b.location.city]]
+                busInCity.push({business: b, index: i})
+                cities[b.location.city] = busInCity
+            } else {
+                cities[b.location.city] = [{business: b, index: i}]
+            }
+        })
+        if (Object.keys(cities).length!==0 && returnedRes.length===0){
+            setReturnedRes(() => {
+                return Object.keys(cities).map((city) => {
+                    return <Location
+                    key={city}
+                    city={city}
+                    restaurants={cities[city]}
+                    clicked={cityRests}
+                />
+                })}
+            )
+        }
     }
 
     return (

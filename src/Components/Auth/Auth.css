@@ -1,10 +1,17 @@
 .auth-form {
-    width: 80%;
-    margin: auto;
+    max-width: 20%;
+    min-width: 350px;
     padding: 1rem;
-    border: 1px solid #3b0062;
     border-radius: 5px;
-    margin-top: 72px;
+    margin-top: 172px;
+    float: right;
+    margin-left: 75%;
+    /* margin-right: 25%; */
+    right: 20%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    z-index: 100;
+    position: absolute;
+    background-color: white;
   }
   
   @media (min-width: 768px) {

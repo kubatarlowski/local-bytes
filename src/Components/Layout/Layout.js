@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
 import Toolbar from '../Navigation/Toolbar/Toolbar'
@@ -9,7 +9,7 @@ import Visited from '../User/Visited/Visited'
 import User from '../User/User'
 import Login from '../Auth/Login'
 import SignUp from '../Auth/Signup'
-
+import Banner from '../Layout/LoginBanner'
 
 
 const Layout = (props) => {
@@ -80,7 +80,10 @@ const Layout = (props) => {
         setAuthLoading(true);
         axios.post('http://localhost:5000/auth/signup', {
           email: signupForm.email.value ,
-          password: signupForm.password.value
+          password: signupForm.password.value,
+          first: signupForm.first.value ,
+          last: signupForm.last.value ,
+          confirm: signupForm.confirm.value
         })
         .then(res => {
             if (res.status === 422) {
@@ -132,7 +135,9 @@ const Layout = (props) => {
       }, [setAutoLogout])
 
     let pages = [
-        <Route
+        <Banner key='banner'/>,
+        <Switch key='switch'>
+            <Route
                 path="/signup"
                 key='signup'
                 exact
@@ -142,35 +147,37 @@ const Layout = (props) => {
                     onSignup={signupHandler}
                     loading={authLoading}
                     />
-                )}/>,
-                <Route
+            )}/>
+            <Route
                 path="/"
                 key='login'
-                exact
                 render={props => (
                     <Login
                     {...props}
                     onLogin={loginHandler}
                     loading={authLoading}
                     />
-                )}/>
+            )}/>
+        </Switch>
     ]
 
     if (isAuth) {
         pages = [
-        <Route key='a' path="/" exact 
-            component={() => <Restaurants token={token} userId={userId}/>} />,
-        <Route key='b' path="/visit" exact 
-            component={() => <Visit token={token} userId={userId}/>} />,
-        <Route key='c' path="/visited" exact 
-            component={() => <Visited token={token} userId={userId}/>} />,
-        <Route key='d' path="/profile" exact 
-            component={() => <User token={token} userId={userId}/>} />]
+        <Toolbar key ='toolbar' onLogout={logoutHandler}/>,
+        <Switch key='switch'>
+            <Route key='b' path="/visit" exact 
+                component={() => <Visit token={token} userId={userId}/>} />
+            <Route key='c' path="/visited" exact 
+                component={() => <Visited token={token} userId={userId}/>} />
+            <Route key='d' path="/profile" exact 
+                component={() => <User token={token} userId={userId}/>} />
+            <Route key='a' path="/" 
+                component={() => <Restaurants token={token} userId={userId}/>} />
+        </Switch>]
     }
 
     return (
         <Fragment>
-            <Toolbar onLogout={logoutHandler}/>
             {pages}
         </Fragment>)
 }

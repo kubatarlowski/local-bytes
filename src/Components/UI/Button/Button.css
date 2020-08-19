@@ -1,12 +1,18 @@
 .button {
   font: inherit;
-  border: 1px solid red;
+  font-size: 23px;
+  font-style: bold;
+  border: 1px solid rgb(224, 20, 20);
   color: white;
   background: none;
-  padding: 0.5rem 1rem;
+  /* padding: 1rem 0rem; */
   cursor: pointer;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   text-decoration: none;
+  border-radius: 6px;
+  width: 100%;
+  height: 45px;
+  margin-bottom: 5px;
 }
 
 .button:focus {
@@ -30,7 +36,7 @@
 
 .button:hover,
 .button:active {
-  background: red;
+  background: rgb(224, 20, 20);
   color: white;
 }
 
@@ -45,14 +51,14 @@
 }
 
 .button--raised {
-  background: red;
+  background: rgb(224, 20, 20);
   color: white;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.26);
+  /* box-shadow: 0 1px 8px rgba(0, 0, 0, 0.26); */
 }
 
 .button--raised:hover,
 .button--raised:active {
-  background: red;
+  background: rgb(224, 20, 20);
 }
 
 .button.button--accent {
@@ -63,7 +69,7 @@
 .button--accent:hover,
 .button--accent:active {
   background: #fab83f;
-  color: red;
+  color: rgb(224, 20, 20);
 }
 
 .button--flat.button--accent:hover,
@@ -74,7 +80,7 @@
 
 .button.button--accent.button--raised {
   background: #fab83f;
-  color: red;
+  color: rgb(224, 20, 20);
 }
 
 .button--raised.button--accent:hover,
