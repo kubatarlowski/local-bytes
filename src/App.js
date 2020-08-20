@@ -10,7 +10,7 @@ function App() {
   localStorage.removeItem('userId');
   
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="https://localbytes.herokuapp.com/">
       <div className="App">
         <Layout />
       </div>
