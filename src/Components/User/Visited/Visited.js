@@ -13,7 +13,7 @@ const Visited = props => {
         let mounted = true
         if (mounted) {
             setLoading(true)
-            axios.get("http://localhost:5000/visited/all",{
+            axios.get("https://local-bytes-api.herokuapp.com/visited/all",{
                 headers: {
                     Authorization: 'Bearer ' + props.token
                 }

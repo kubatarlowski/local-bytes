@@ -17,7 +17,7 @@ const Visit = props => {
 
     const updateVisited = (newBus,index) => {
         deleteBusiness(index)
-        axios.post("http://localhost:5000/visited/add",{
+        axios.post("https://local-bytes-api.herokuapp.com/visited/add",{
             userId: props.userId,
             businessID: newBus.id
         },{
@@ -26,7 +26,7 @@ const Visit = props => {
             }
         })
         .then(_res => {
-            axios.post("http://localhost:5000/visit/delete",{
+            axios.post("https://local-bytes-api.herokuapp.com/visit/delete",{
                 userId: props.userId,
                 businessID: newBus.id
             },{
@@ -37,26 +37,25 @@ const Visit = props => {
         })
         .catch(err => console.log(err))
     }
-
     useEffect(() => {
         let mounted = true
         if (mounted) {
             setLoading(true)
-            axios.get("http://localhost:5000/visit/all",{
+            axios.get("https://local-bytes-api.herokuapp.com/visit/all",{
                 headers: {
                     Authorization: 'Bearer ' + props.token
                 }
             })
-            .then(userVisits => {
-                if (userVisits.data.restaurants.length > 0) {
-                    setVisits(userVisits.data.restaurants)
+            .then(userVisit => {
+                if (userVisit.data.restaurants.length > 0) {
+                    setVisits(userVisit.data.restaurants)
                 }
                 setLoading(false)
             })
             .catch((err) => console.log(err))
         }
-        return () => mounted = false       
-    },[props.token, visits])
+    return () => mounted = false
+    },[props.token])
 
     const cityRests = rests => {
         setReturnedRes(() => {

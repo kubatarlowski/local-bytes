@@ -21,7 +21,7 @@ const Restaurants = props => {
 
     const updateVisited = (newBus,index) => {
         deleteBusiness(index)
-        axios.post("http://localhost:5000/visited/add",{
+        axios.post("https://local-bytes-api.herokuapp.com/visited/add",{
             userId: props.userId,
             businessID: newBus.id
         },{
@@ -34,7 +34,7 @@ const Restaurants = props => {
 
     const updateVisit = (newBus,index) => {
         deleteBusiness(index)
-        axios.post("http://localhost:5000/visit/add",{
+        axios.post("https://local-bytes-api.herokuapp.com/visit/add",{
             userId: props.userId,
             businessID: newBus.id
         },{
@@ -47,7 +47,7 @@ const Restaurants = props => {
 
     useEffect(() => {
         async function getRestaurants() {
-            await axios.get("http://localhost:5000/visit/all",{
+            await axios.get("https://local-bytes-api.herokuapp.com/visit/all",{
                 headers: {
                     Authorization: 'Bearer ' + props.token
                 }
@@ -60,7 +60,7 @@ const Restaurants = props => {
                 }
             })
             .catch((err) => console.log(err))
-            await axios.get("http://localhost:5000/visited/all",{
+            await axios.get("https://local-bytes-api.herokuapp.com/visited/all",{
                 headers: {
                     Authorization: 'Bearer ' + props.token
                 }
@@ -73,7 +73,7 @@ const Restaurants = props => {
                 }
             })
             .catch((err) => console.log(err))
-            await axios.get("http://localhost:5000/restaurants/search", {
+            await axios.get("https://local-bytes-api.herokuapp.com/restaurants/search", {
                 params: {        
                     location: searchLocation,
                     categories: categories.join(',')

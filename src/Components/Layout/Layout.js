@@ -39,7 +39,7 @@ const Layout = (props) => {
     const loginHandler = (event, authData) => {
         event.preventDefault();
         setAuthLoading(true);
-        axios.post('http://localhost:5000/auth/login', {
+        axios.post('https://local-bytes-api.herokuapp.com/auth/login', {
             email: authData.email,
             password: authData.password
         })
@@ -78,7 +78,7 @@ const Layout = (props) => {
     const signupHandler = (event, signupForm) => {
         event.preventDefault();
         setAuthLoading(true);
-        axios.post('http://localhost:5000/auth/signup', {
+        axios.post('https://local-bytes-api.herokuapp.com/auth/signup', {
           email: signupForm.email.value ,
           password: signupForm.password.value,
           first: signupForm.first.value ,
